@@ -1,10 +1,6 @@
 db_user: physicstutor01
 db_pass: physictutor12301
 db_name: physicstutors01
-
-mysql_login_user: root
-mysql_login_password: RootPass123!
-
 http_host: physicstutors.org
 http_port: 80
 http_conf: default.conf
