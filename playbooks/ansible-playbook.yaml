@@ -80,7 +80,7 @@
       loop:
         - mysql-server
         - mysql-client
-        - python3-pymysql
+        - python3-pymysql   # switch to pymysql
         - libmysqlclient-dev
 
     - name: Start and Enable MySQL Service
@@ -89,8 +89,20 @@
         state: started
         enabled: yes
 
+    - name: Set MySQL root password and switch auth plugin
+      mysql_user:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: root
+        host: localhost
+        password: "{{ mysql_root_password }}"
+        priv: "*.*:ALL,GRANT"
+        state: present
+        check_implicit_admin: yes
+
     - name: Create MySQL User
       mysql_user:
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
         name: "{{ db_user }}"
         password: "{{ db_pass }}"
         priv: '*.*:ALL'
@@ -99,6 +111,8 @@
 
     - name: Create Database
       mysql_db:
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
         name: "{{ db_name }}"
         state: present
 
@@ -116,6 +130,7 @@
       service:
         name: mysql
         state: restarted
+     
 
 # ---------------------- APACHE PLAYBOOK ----------------------
 
