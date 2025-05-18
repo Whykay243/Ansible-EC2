@@ -13,11 +13,11 @@ The entire provisioning process is automated with GitHub Actions workflows, enab
 ## Repository Structure
 
 ### 1. Infrastructure Provisioning Repository  
-**[Ec2-Infra-provisioning-for-ANSIBLE (Public)](your-repo-link-here)**  
+**[Ec2-Infra-provisioning-for-ANSIBLE (Public)](https://github.com/Whykay243/Ec2-Infra-provisionnig-for-ANSIBLE.git)**  
 This repo contains the code to provision EC2 instances and install base services using automation.
 
 ### 2. Configuration Management Repository  
-**[Ansible-EC2](your-repo-link-here)**  
+**[Ansible-EC2](https://github.com/Whykay243/Ansible-EC2.git)**  
 This repo contains Ansible playbooks and configuration management files used to configure the provisioned servers.
 
 Key contents include:
