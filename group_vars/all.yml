@@ -1,6 +1,6 @@
-db_user: austin
-db_pass: January12#
-db_name: realcloud
+db_user: physicstutor
+db_pass: physictutor123
+db_name: physicstutors
 http_host: 54.145.157.189
 http_port: 80
 http_conf: default.conf
