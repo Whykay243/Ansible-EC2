@@ -1,5 +1,5 @@
 - name: PlayBook 1 - Installation Nginx
-  hosts: Nginx-Servers
+  hosts: Nginx_Servers
   become: true
   tasks:
     - name: Install Nginx Web Server
@@ -15,7 +15,7 @@
         enabled: yes
 
 - name: PlayBook 2 - MySQL Setup
-  hosts: Database-Servers
+  hosts: Database_Servers
   become: true
   vars_files:
     - ../group_vars/all.yml
@@ -66,7 +66,7 @@
         state: restarted
 
 - name: PlayBook 3 - Apache Httpd Setup
-  hosts: Apache-Servers
+  hosts: Apache_Servers
   become: true
   vars_files:
     - ../group_vars/all.yml
