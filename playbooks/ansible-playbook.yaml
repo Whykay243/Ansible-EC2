@@ -80,7 +80,7 @@
       loop:
         - mysql-server
         - mysql-client
-        - python3-pymysql
+        - python3-mysqldb
         - libmysqlclient-dev
 
     - name: Start and Enable MySQL Service
