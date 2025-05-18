@@ -65,7 +65,7 @@
         name: mysql
         state: restarted
 
-- name: PlayBook 3 - Apache  Httpd Setup
+- name: PlayBook 3 - Apache Httpd Setup
   hosts: Apache-Servers
   become: true
   vars_files:
