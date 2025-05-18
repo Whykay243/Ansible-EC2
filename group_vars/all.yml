@@ -1,6 +1,6 @@
-db_user: physicstutor
-db_pass: physictutor123
-db_name: physicstutors
+db_user: physicstutor01
+db_pass: physictutor12301
+db_name: physicstutors01
 
 mysql_login_user: root
 mysql_login_password: RootPass123!
