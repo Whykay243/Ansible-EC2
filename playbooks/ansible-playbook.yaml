@@ -1,5 +1,3 @@
-# ---------------------- NGINX PLAYBOOK ----------------------
-
 - name: PlayBook 1 - Installation Nginx
   hosts: Nginx_Servers
   become: true
@@ -91,21 +89,8 @@
         state: started
         enabled: yes
 
-    - name: Set MySQL root password and allow remote root login
-      mysql_user:
-        login_user: root
-        login_password: ''
-        name: root
-        password: "{{ mysql_login_password }}"
-        host_all: true
-        priv: '*.*:ALL,GRANT'
-        state: present
-      ignore_errors: yes
-
     - name: Create MySQL User
       mysql_user:
-        login_user: "{{ mysql_login_user }}"
-        login_password: "{{ mysql_login_password }}"
         name: "{{ db_user }}"
         password: "{{ db_pass }}"
         priv: '*.*:ALL'
@@ -114,8 +99,6 @@
 
     - name: Create Database
       mysql_db:
-        login_user: "{{ mysql_login_user }}"
-        login_password: "{{ mysql_login_password }}"
         name: "{{ db_name }}"
         state: present
 
