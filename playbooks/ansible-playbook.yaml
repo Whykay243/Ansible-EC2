@@ -1,6 +1,8 @@
 - name: PlayBook 1 - Installation Nginx
   hosts: Nginx_Servers
   become: true
+  vars_files:
+    - ../group_vars/all.yml
   tasks:
     - name: Install Nginx Web Server
       apt:
@@ -13,6 +15,56 @@
         name: nginx
         state: started
         enabled: yes
+
+    - name: Create Document Root for Virtual Host
+      file:
+        path: "/var/www/{{ http_host }}"
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+    - name: Copy NGINX index.html
+      copy:
+        src: "files/nginx-index.html"
+        dest: "/var/www/{{ http_host }}/index.html"
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Deploy NGINX Virtual Host Configuration
+      template:
+        src: "files/nginx-template.conf"
+        dest: "/etc/nginx/sites-available/{{ http_conf }}"
+
+    - name: Enable Virtual Host
+      file:
+        src: "/etc/nginx/sites-available/{{ http_conf }}"
+        dest: "/etc/nginx/sites-enabled/{{ http_conf }}"
+        state: link
+        force: yes
+
+    - name: Remove Default Site (optional)
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Test NGINX Configuration
+      command: nginx -t
+      register: nginx_test
+      ignore_errors: true
+
+    - name: Fail if NGINX config test fails
+      fail:
+        msg: "NGINX config test failed."
+      when: nginx_test.rc != 0
+
+    - name: Reload NGINX
+      service:
+        name: nginx
+        state: reloaded
+
+# ---------------------- MYSQL PLAYBOOK ----------------------
 
 - name: PlayBook 2 - MySQL Setup
   hosts: Database_Servers
@@ -64,6 +116,8 @@
       service:
         name: mysql
         state: restarted
+
+# ---------------------- APACHE PLAYBOOK ----------------------
 
 - name: PlayBook 3 - Apache Httpd Setup
   hosts: Apache_Servers
